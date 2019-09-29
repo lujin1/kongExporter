@@ -4,7 +4,6 @@ import (
 	"fmt"
 	"github.com/prometheus/client_golang/prometheus"
 	"kongExporter/libs"
-	"kongExporterbk/collector"
 	"strconv"
 )
 
@@ -43,8 +42,8 @@ func (e *Exporter) Collect(ch chan<- prometheus.Metric) {
 		//fmt.Print(ip.Value)
 		//fmt.Printf("%T\n",ip.Value)
 		url = "http://" + ip.Value.(string) + ":8001/metrics"
-
-		metricsKey, metricsValue = collector.GetMetrics(url)
+		//url = "http://52.184.29.61:8001/metrics"
+		metricsKey, metricsValue = GetMetrics(url)
 		//metrics_value += metrics_value
 		metricsValueFloat64, _ = strconv.ParseFloat(metricsValue, 64)
 		fmt.Printf("%s metrics:%g \n", url, metricsValueFloat64)

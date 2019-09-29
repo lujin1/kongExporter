@@ -4,7 +4,7 @@ import (
 	"container/list"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/client-go/kubernetes"
-	"k8s.io/client-go/tools/clientcmd"
+	"k8s.io/client-go/rest"
 )
 
 var (
@@ -13,24 +13,26 @@ var (
 
 func InitK8sClient() {
 
-	//config, err := rest.InClusterConfig()
-	//if err != nil {
-	//	panic(err.Error())
-	//}
-	//// creates the clientset
-	//_, err = kubernetes.NewForConfig(config)
-	//if err != nil {
-	//	panic(err.Error())
-	//}
-
-	config, err := clientcmd.BuildConfigFromFlags("", *Kubeconfig)
+	//从集群中读取kubectl的config信息
+	config, err := rest.InClusterConfig()
 	if err != nil {
 		panic(err.Error())
 	}
+	// creates the clientset
 	c, err = kubernetes.NewForConfig(config)
 	if err != nil {
 		panic(err.Error())
 	}
+
+	//从外部读取kubectl的config信息
+	//config, err := clientcmd.BuildConfigFromFlags("", *Kubeconfig)
+	//if err != nil {
+	//	panic(err.Error())
+	//}
+	//c, err = kubernetes.NewForConfig(config)
+	//if err != nil {
+	//	panic(err.Error())
+	//}
 }
 
 

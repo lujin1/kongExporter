@@ -9,18 +9,18 @@ import (
 	"net/http"
 )
 
-
 func main() {
 	fmt.Println(`
   This is a kong example of prometheus exporter
-  Access: http://127.0.0.1:8081
+  Access: http://0.0.0.0:8080
   `)
-	libs.InitConfigConfig()
+
+	//libs.InitConfigConfig()
 	libs.InitK8sClient()
-	//libs.getKongPodIP()
+
 	// Define parameters
 	metricsPath := "/metrics"
-	listenAddress := ":8081"
+	listenAddress := ":8080"
 	metricsPrefix := "kong"
 
 	// Register kong exporter, not necessary
@@ -41,6 +41,4 @@ func main() {
 	})
 
 	fmt.Println(http.ListenAndServe(listenAddress, nil))
-
-
 }
